@@ -95,7 +95,6 @@ Limitation: This service is designed to return 50 trip details at a time.  In or
 
 `curl -v "http://localhost:8080/trips?vehicle=green&fromBorough=Brooklyn&toBorough=Brooklyn&fromTime=2018-01-01T07:00:00&toTime=2018-01-01T12:00:00&offset=5"`
 
-
 ## Errors
 
 Error may occur when you provide invalid search keyword or when the given option is not found.  It is also possible that the provided search data is not in the expected format, such as invalid date/time format.  Below is a list of possible errors you may receive.
@@ -136,3 +135,4 @@ This service is nearly from perfect.  It was developed under a short period of t
 Thanks,
 
 Fiona
+master
