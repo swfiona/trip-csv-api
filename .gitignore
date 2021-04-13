@@ -1,0 +1,9 @@
+.classpath
+.project
+.settings/
+target/
+bin/
+/spring-boot-logger.log
+/fhv_tripdata_2018-01.csv
+/green_tripdata_2018-01.csv
+/yellow_tripdata_2018-01.csv
