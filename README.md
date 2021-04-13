@@ -38,7 +38,9 @@ Note: date and time must be provided in the format of `yyyy-MM-dd'T'HH:mm:ss` as
 
 You will receive the JSON response.  `Total` in the response shows the total number of trips found for this search.
 
-`{"total":465,"tripResults":[{"pickUpLoc":80,"dropOffLoc":80,"pickUpTime":"2018-01-01 07:22:18","dropOffTime":"2018-01-01 07:23:18","vendorId":"1","storeFwdFlag":"N","rateCode":"5","distance":0.1,"fareAmt":0.0,"extraAmt":0.0,"mtaTax":0.0,"tip":0.0,"toll":0.0,"impSurcharge":0.0,"totalAmt":0.0,"paymentType":3,"ehailFee":null,"tripType":2,"conSurcharge":null,"passengerCnt":1},{"pickUpLoc":80,"dropOffLoc":80,"pickUpTime":"2018-01-01 07:23:52","dropOffTime":"2018-01-01 07:24:40","vendorId":"1","storeFwdFlag":"N","rateCode":"5","distance":0.1,"fareAmt":25.0,"extraAmt":0.0,"mtaTax":0.0,"tip":2.0,"toll":0.0,"impSurcharge":0.0,"totalAmt":27.0,"paymentType":1,"ehailFee":null,"tripType":2,"conSurcharge":null,"passengerCnt":1}]...}`
+```json
+{"total":465,"tripResults":[{"pickUpLoc":80,"dropOffLoc":80,"pickUpTime":"2018-01-01 07:22:18","dropOffTime":"2018-01-01 07:23:18","vendorId":"1","storeFwdFlag":"N","rateCode":"5","distance":0.1,"fareAmt":0.0,"extraAmt":0.0,"mtaTax":0.0,"tip":0.0,"toll":0.0,"impSurcharge":0.0,"totalAmt":0.0,"paymentType":3,"ehailFee":null,"tripType":2,"conSurcharge":null,"passengerCnt":1},{"pickUpLoc":80,"dropOffLoc":80,"pickUpTime":"2018-01-01 07:23:52","dropOffTime":"2018-01-01 07:24:40","vendorId":"1","storeFwdFlag":"N","rateCode":"5","distance":0.1,"fareAmt":25.0,"extraAmt":0.0,"mtaTax":0.0,"tip":2.0,"toll":0.0,"impSurcharge":0.0,"totalAmt":27.0,"paymentType":1,"ehailFee":null,"tripType":2,"conSurcharge":null,"passengerCnt":1}]...}
+```
 
 Limitation: This service is designed to return 50 trip details at a time.  In order to retrieve the latter trips, you may provide an offset value, ex. offset=0 for the first 50 trip data, offset=1 for the next 50 trips and so on.  Below is an example on how to use the service with an offset.
 
