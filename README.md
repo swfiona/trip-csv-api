@@ -8,7 +8,7 @@ This web service API provides a list of 2018 New York City Taxi transportation t
 
 Some of the information you can find about the trips are the start and end locations as well as the pick up and drop off times.  For yellow taxi and green cab trips, you will find more interesting data such as the number of passengers for each trip, fare amount, tax, tip, total paid and also payment types.
 
-##Build Project with Maven
+## Build Project with Maven
 To be able to run the service you will need to build it first.  To build and package into a single executable Jar file with a Maven, use the below command.  You need to run it from the project folder that contains the pom.xml.
 
 `maven package` 
@@ -17,11 +17,11 @@ or
 
 `maven install`
 
-##Run the Service 
+## Run the Service 
 To run this application from command line, you can use the jar -jar command.
 `java - jar target\trip-csv-api-0.0.1.jar`
 
-##Test the Service
+## Test the Service
 
 You may use this API service to find a list of trips based on the start/end borough within a time range.  For example, to obtain a list of For-Hire vehicle trips from Queens to Manhattan from 1/9 to 1/10, provide the following input:
 * vehicle: FHV
@@ -32,7 +32,7 @@ You may use this API service to find a list of trips based on the start/end boro
 
 Note: date and time must be provided in the format of `yyyy-MM-dd'T'HH:mm:ss` as provided below.
 
-###Find All Green Cab Trips in Brooklyn between 7AM and 12PM on 1/1
+### Find All Green Cab Trips in Brooklyn between 7AM and 12PM on 1/1
 
 `curl -v "http://localhost:8080/trips?vehicle=green&fromBorough=Brooklyn&toBorough=Brooklyn&fromTime=2018-01-01T07:00:00&toTime=2018-01-01T12:00:00"`
 
@@ -45,11 +45,11 @@ Limitation: This service is designed to return 50 trip details at a time.  In or
 `curl -v "http://localhost:8080/trips?vehicle=green&fromBorough=Brooklyn&toBorough=Brooklyn&fromTime=2018-01-01T07:00:00&toTime=2018-01-01T12:00:00&offset=5"`
 
 
-##Errors
+## Errors
 
 Error may occur when you provide invalid search keyword or when the given option is not found.  It is also possible that the provided search data is not in the expected format, such as invalid date/time format.  Below is a list of possible errors you may receive.
 
-###Invalid Vehicle Type
+### Invalid Vehicle Type
 
 `curl -v "http://localhost:8080/trips?vehicle=f&fromBorough=test&toBorough=Manhatten&fromTime=2018-01-09T07:00:00&toTime=2018-01-10T07:00:00"`
 
@@ -57,7 +57,7 @@ Response you will receive:
 
 `{"status":"404 NOT_FOUND","message":"Invalid vehicle type f ! Valid vehicles are FHV, YELLOW and GREEN.","time":"Mon Apr 12 17:19:39 EDT 2021"}`
 
-###Invalid Borough
+### Invalid Borough
 
 `curl -v "http://localhost:8080/trips?vehicle=green&fromBorough=Boston&toBorough=Brooklyn&fromTime=2018-01-01T07:00:00&toTime=2018-01-01T12:00:00&offset=5"`
 
@@ -66,7 +66,7 @@ Response you will receive:
 `{"status":"404 NOT_FOUND","message":"Boston Not Found","time":"Mon Apr 12 18:08:49 EDT 2021"}`
 
 
-##Disclaimer
+## Disclaimer
 
 This service is nearly from perfect.  It was developed under a short period of time.  I am currently working on adding additional features and improvement for a better and faster service that can retrieve and return a large number of trip data. Feel free to test this service!  I would love to hear your thoughts!
 
