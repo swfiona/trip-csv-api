@@ -50,19 +50,24 @@ Limitation: This service is designed to return 50 trip details at a time.  In or
 Error may occur when you provide invalid search keyword or when the given option is not found.  It is also possible that the provided search data is not in the expected format, such as invalid date/time format.  Below is a list of possible errors you may receive.
 
 ###Invalid Vehicle Type
+
 `curl -v "http://localhost:8080/trips?vehicle=f&fromBorough=test&toBorough=Manhatten&fromTime=2018-01-09T07:00:00&toTime=2018-01-10T07:00:00"`
 
 Response you will receive:
+
 `{"status":"404 NOT_FOUND","message":"Invalid vehicle type f ! Valid vehicles are FHV, YELLOW and GREEN.","time":"Mon Apr 12 17:19:39 EDT 2021"}`
 
 ###Invalid Borough
+
 `curl -v "http://localhost:8080/trips?vehicle=green&fromBorough=Boston&toBorough=Brooklyn&fromTime=2018-01-01T07:00:00&toTime=2018-01-01T12:00:00&offset=5"`
 
 Response you will receive:
+
 `{"status":"404 NOT_FOUND","message":"Boston Not Found","time":"Mon Apr 12 18:08:49 EDT 2021"}`
 
 
 ##Disclaimer
+
 This service is nearly from perfect.  It was developed under a short period of time.  I am currently working on adding additional features and improvement for a better and faster service that can retrieve and return a large number of trip data. Feel free to test this service!  I would love to hear your thoughts!
 
 Thanks,
