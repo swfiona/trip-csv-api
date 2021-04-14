@@ -13,14 +13,19 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.swfiona.tlctrip.model.FHVTrip;
+import com.swfiona.tlctrip.model.Result;
 import com.swfiona.tlctrip.model.Trip;
 import com.swfiona.tlctrip.service.TripService;
 import com.swfiona.tlctrip.service.ZoneService;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.ArrayList;
@@ -62,19 +67,31 @@ public class TripControllerTest {
 	@Test
 	public void testBoroughNotFound() throws Exception {
 		when(zoneSvc.getLocationId(any(String.class))).thenReturn(null);
-		mockMvc.perform(get("/trips")
+		MvcResult resp = mockMvc.perform(get("/trips")
 				.params(paraMap)
 				.accept(MediaType.ALL))
-        		.andExpect(status().isNotFound());	
+        		.andExpect(status().isNotFound())
+        		.andReturn();
+		String contentAsString = resp.getResponse().getContentAsString();
+		assertTrue(contentAsString.contains(
+				"{\"status\":\"404 NOT_FOUND\",\"message\":\"Queens Not Found\","
+				+ "\"time\":"));
 	}
 	
 	@Test
 	public void testInvalidVehicle() throws Exception {
+		paraMap.remove("vehicle");
 		paraMap.add("vehicle", "none");
-		mockMvc.perform(get("/trips")
+		MvcResult resp = mockMvc.perform(get("/trips")
 				.params(paraMap)
 				.accept(MediaType.ALL))
-        		.andExpect(status().isNotFound());	
+        		.andExpect(status().isNotFound())
+        		.andReturn();
+		String contentAsString = resp.getResponse().getContentAsString();
+		assertTrue(contentAsString.contains(
+				"{\"status\":\"404 NOT_FOUND\","
+				+ "\"message\":\"Invalid vehicle type none! Valid vehicles are FHV, YELLOW and GREEN.\","
+				+ "\"time\":"));
 	}
 	
 	@Test
@@ -95,11 +112,34 @@ public class TripControllerTest {
 		when(tripSvc.getTripData(any(String.class), any(List.class), any(List.class), 
 				any(Date.class), any(Date.class))).thenReturn(results);
 		
-		mockMvc.perform(get("/trips")
+		MvcResult result = mockMvc.perform(get("/trips")
 				.params(paraMap)
 				.accept(MediaType.ALL))
-        		.andExpect(status().isOk());
+        		.andExpect(status().isOk())
+        		.andReturn();
+		String contentAsString = result.getResponse().getContentAsString();
+		assertEquals(contentAsString, "{\"total\":1,\"tripResults\":[{\"pickUpLoc\":255,\"dropOffLoc\":99,"
+				+ "\"pickUpTime\":\"2018-01-09T07:00:00\",\"dropOffTime\":\"2018-01-11T07:00:00\","
+						+ "\"dispatchNum\":\"B09480\",\"srFlag\":\"1\"}]}");
+	}
+	
+	@Test
+	public void testNoTripFound() throws Exception {
+		List<Integer> zones = new ArrayList<>();
+		zones.add(99);
+		zones.add(255);
+		List<Trip> noTrip = new ArrayList<>();
+		when(zoneSvc.getLocationId(any(String.class))).thenReturn(zones);
+		when(tripSvc.getTripData(any(String.class), any(List.class), any(List.class), 
+				any(Date.class), any(Date.class))).thenReturn(noTrip);
 		
+		MvcResult resp = mockMvc.perform(get("/trips")
+				.params(paraMap)
+				.accept(MediaType.ALL))
+        		.andExpect(status().isOk())
+        		.andReturn();
+		String contentAsString = resp.getResponse().getContentAsString();
+		assertEquals(contentAsString, "{\"total\":0,\"tripResults\":[]}");
 	}
 
 }
